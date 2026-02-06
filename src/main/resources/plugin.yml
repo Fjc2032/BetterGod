@@ -1,8 +1,12 @@
 name: BetterGod
-version: '0.1.0-alpha'
+version: '@project.version@'
 main: dev.Fjc.betterGod.BetterGod
 api-version: '1.21'
 prefix: BG
 load: STARTUP
 authors: [ Fjc ]
 description: A /god command that actually respects our environment.
+
+commands:
+  god:
+    description: Enables invincibility, with optional context

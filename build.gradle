@@ -1,10 +1,12 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 group = 'dev.Fjc'
-version = '0.1.0-alpha'
+version = '0.1.5-alpha'
 
 repositories {
     mavenCentral()
@@ -12,10 +14,14 @@ repositories {
         name = "papermc-repo"
         url = "https://repo.papermc.io/repository/maven-public/"
     }
+    maven {
+        url = "https://mvn.lumine.io/repository/maven-public/"
+    }
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
+    compileOnly("io.lumine:Mythic-Dist:5.6.1")
 }
 
 tasks {
@@ -51,5 +57,10 @@ processResources {
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
         expand props
+    }
+
+    duplicatesStrategy = 'include'
+    from(sourceSets.main.resources.srcDirs) {
+        filter(ReplaceTokens, tokens: [version: project.version])
     }
 }
