@@ -7,6 +7,9 @@ import io.lumine.mythic.core.mobs.ActiveMob;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
+import java.util.List;
+import java.util.Objects;
+
 public class Mythic {
 
     private static final BetterGod plugin = BetterGod.getInstance();
@@ -46,11 +49,18 @@ public class Mythic {
         return valid && mythic.getMobManager().isMythicMob(entity);
     }
 
-    public static boolean isMythicMobInRange(Location location) {
-        for (Entity entity : location.getNearbyEntities(45, 45, 45)) {
+    public static boolean isMythicMobInRange(Location location, int range) {
+        for (Entity entity : location.getNearbyEntities(range, range, range)) {
             return isMythicMob(entity);
         }
         return false;
+    }
+
+    public static List<Entity> nearbyMythicMobs(Location location, int bound) {
+        return location.getNearbyEntities(bound, bound, bound).stream()
+                .filter(Objects::nonNull)
+                .filter(Mythic::isMythicMob)
+                .toList();
     }
 
 

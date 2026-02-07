@@ -31,11 +31,8 @@ public class DamageIntercept implements Listener {
                 isEnvSource(event)) event.setCancelled(true);
             }
             case VANILLA -> {
-                if (event instanceof EntityDamageByBlockEvent ||
-                event instanceof EntityDamageByEntityEvent ||
-                        isEnvSource(event) &&
-                        !isCustom(event) &&
-                 !Mythic.isMythicMobInRange(player.getLocation())) event.setCancelled(true);
+                if (!isCustom(event) && !Mythic.isMythicMobInRange(player.getLocation(), 45))
+                    event.setCancelled(true);
             }
             case null, default -> {}
         }

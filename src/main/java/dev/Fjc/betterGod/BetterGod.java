@@ -1,8 +1,10 @@
 package dev.Fjc.betterGod;
 
+import dev.Fjc.betterGod.command.Debug;
 import dev.Fjc.betterGod.command.GodCommand;
 import dev.Fjc.betterGod.depend.Mythic;
 import dev.Fjc.betterGod.listener.DamageIntercept;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,7 +20,9 @@ public final class BetterGod extends JavaPlugin {
             Util.severe("Failed to verify a Mythic instance. Is MythicMobs present?");
         }
         registerEvent(new DamageIntercept());
+
         registerCmd(new GodCommand(), "god");
+        registerCmd(new Debug(), "god-debug");
 
         Util.info("All libraries, listeners, and events loaded.");
     }
@@ -37,7 +41,7 @@ public final class BetterGod extends JavaPlugin {
         Util.info("Registered event listener " + listener);
     }
 
-    private void registerCmd(TabExecutor executor, String command) {
+    private void registerCmd(CommandExecutor executor, String command) {
         var instance = this.getServer().getPluginCommand(command);
         if (instance != null) instance.setExecutor(executor);
         else Util.warn("Something went wrong while trying to register command " + command);

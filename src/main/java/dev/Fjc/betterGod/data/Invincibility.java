@@ -88,7 +88,10 @@ public class Invincibility {
      * @apiNote You must set an invincibility state on the player before calling this method.
      */
     public Invincibility announceToPlayer(String content) {
-        if (!b.containsKey(target)) Util.severe("Player was not set invincible first.");
+        if (!b.containsKey(target)) {
+            Util.severe("Player was not set invincible first.");
+            return null;
+        }
         target.sendMessage(Util.nbt(content));
 
         return this;

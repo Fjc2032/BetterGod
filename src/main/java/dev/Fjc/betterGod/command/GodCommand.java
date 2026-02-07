@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static dev.Fjc.betterGod.GodInstance.plugin;
 
@@ -96,7 +97,8 @@ public class GodCommand implements TabExecutor {
     }
 
     private int level(Player player) {
-        for (PermissionKey key : PermissionKey.values()) {
+        List<PermissionKey> keys = Arrays.asList(PermissionKey.values()).reversed();
+        for (PermissionKey key : keys) {
             if (key.getPermission() == null) continue;
             if (player.hasPermission(key.getPermission())) return key.ordinal();
         }
@@ -105,10 +107,16 @@ public class GodCommand implements TabExecutor {
 
     private void set(@NotNull Player player, String arg) {
         Invincibility instance = new Invincibility(player);
+        if (Objects.equals(arg, "clear")) {
+            instance.removeInvincibility()
+                    .announceToPlayer("You are no longer invincible.");
+            return;
+        }
         Arrays.asList(Invincibility.Context.values()).forEach(
                 action -> {
                     if (arg.toUpperCase().contains(action.toString())) {
-                        if (action.getLevel() >= level(player)) instance.setInvincible(action);
+                        if (action.getLevel() >= level(player)) instance.setInvincible(action)
+                                .announceToPlayer("Invincibility toggled on with context: " + action);
                     }
                 }
         );

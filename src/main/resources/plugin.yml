@@ -10,3 +10,5 @@ description: A /god command that actually respects our environment.
 commands:
   god:
     description: Enables invincibility, with optional context
+  god-debug:
+    description: Debug for BetterGod
